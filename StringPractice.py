@@ -38,4 +38,4 @@ print(message[middle])
 print(message[0:7])
 print(message[7:10])
 
-print(help(message.index))
+print(help(message.index)) # input the method you want to get info on without the ()
