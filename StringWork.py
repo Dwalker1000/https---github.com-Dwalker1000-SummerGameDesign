@@ -1,7 +1,6 @@
 import os
 os.system('cls')
 
-
 #problem 1.1
 str1 = "James"
 print(str1[0], end = "")
@@ -21,12 +20,12 @@ print(str1[int(len(str1)/2) + 1])
 s1 = "Ault"
 s2 = "Kelly"
 s1, s2 = "Ault", "Kelly"
-word = s1[0:int(len(s1)/2)] + s2 + s1[int(len(s1)/2):int(len(s1)-1)]
+word = s1[:int(len(s1)/2)] + s2 + s1[int(len(s1)/2):]
 print(word)
 
 #problem 4
 s1, s2 = "America", "Japan"
-word = s1[0] + s2[0] + s1[int(len(s1)/2)] + s2[int(len(s1)/2-1)] + s1[int(len(s1)-1)] + s2[int(len(s2)-1)]
+word = s1[0] + s2[0] + s1[int(len(s1)/2)] + s2[int(len(s1)/2-1)] + s1[-1] + s2[-1]
 print(word)
 
 #problem 5
