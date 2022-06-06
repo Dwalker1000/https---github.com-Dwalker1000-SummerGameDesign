@@ -16,10 +16,15 @@ def menu():
         print("| 5. Exit                     |")
         print("===============================")
         
-        while(x < 1 or x > 5):
+        check = True
+        while(check):
             try:
                 x = int(input("Enter a number(1-5): "))
-            except:
+                if x > 0 and x < 6:
+                    check = False
+                else:
+                    print("only enter 1,2,3,4,5")
+            except ValueError:
                 print("Please enter a number")
         
         if x == 1:
