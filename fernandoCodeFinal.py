@@ -9,6 +9,7 @@ os.system ('cls')
 from time import sleep
 seconds=.5
 
+list = ["coral","scallop","sea urchin","oyster","mussel","cockle","clam","geoduck","abelone","ostrea"]
 count = 0
 Game = True
 theword = ""
@@ -30,47 +31,6 @@ def hint(): # allows us to reuse code in multiple spots
     
     else:
         print("You are horrible at guessing, no more hints, go till you get it right")
-    
-
-def option1():
-    os.system('cls')
-    check = True
-    count = 0
-    list = ["coral","scallop","sea urchin","oyster","mussel","cockle","clam","geoduck","abelone","ostrea"]
-    theword=random.choice(list)
-    while check and count <5:
-        guess=input("plese put your guess here: ")
-        if guess == theword:
-            print("Congrats, You got it")
-            check = False
-        count += 1
-
-def option2():
-    os.system('cls')
-    check = True
-    count = 0
-    list = ["red", "blue", "yellow", "green", "orange", "purple", "indigo", "black", "white", "brown"]
-    theword=random.choice(list)
-    while check and count <5:
-        guess=input("plese guess a color here: ")
-        if guess == theword:
-            print("Congrats, You got it")
-            check = False
-        count += 1
-
-def option3():
-    global count
-    os.system('cls')
-    check = True
-    count = 0
-    list = ["coral","scallop","sea urchin","oyster","mussel","cockle","clam","geoduck","abelone","ostrea"]
-    theword=random.choice(list)
-    while check and count <5:
-        guess=input("plese put your guess here: ")
-        if guess == theword:
-            print("Congrats, You got it")
-            check = False
-        count += 1
 
 while Game:
     print("|***************************************|")
@@ -84,7 +44,7 @@ while Game:
     print("|  These animals are big fans of water  |")
     print("|***************************************|")
 
-    
+    theword=random.choice(list)
     name = input("What is your name? ")
     print(name, end = ", ")
     answer = input("would you like to play the game? ")
@@ -104,12 +64,16 @@ while Game:
         except:
             print("Plese enter a number")
 
-    if choice == 1:
-        option1()
-    elif choice == 2:
-        option2()
-    elif choice == 3:
-        option3()
+    os.system('cls')
+    check = True
+    while check and count <5:
+        guess=input("plese put your guess here: ")
+        if guess == theword:
+            print("Congrats, You got it")
+            check = False
+        else:
+            hint()
+        count += 1
 
     os.system('cls')
     answer = input("Do you want to play again? ")
