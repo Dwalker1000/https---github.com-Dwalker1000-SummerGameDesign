@@ -4,8 +4,6 @@ import random
 import os
 
 os.system ('cls')
-from time import sleep
-seconds=.5
 
 list1 = ["coral","scallop","sea urchin","oyster","mussel","cockle","clam","geoduck","abelone","ostrea"]
 list2 = ["red", "blue", "yellow", "green", "orange", "purple", "indigo", "black", "white", "brown"]
