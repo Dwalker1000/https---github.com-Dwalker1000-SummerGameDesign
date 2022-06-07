@@ -2,8 +2,6 @@
 # from ctypes.wintypes import WORD
 import random
 import os
-from secrets import choice
-from tabnanny import check 
 
 os.system ('cls')
 from time import sleep
@@ -15,6 +13,8 @@ list3 = ["Apple", "Apricot", "Avocado", "Banana", "Blackberry", "Blueberry", "Ch
 count = 0
 Game = True
 theword = ""
+high = 0
+name = input("What is your name? ")
 
 def hint(): # allows us to reuse code in multiple spots
     global count
@@ -34,20 +34,30 @@ def hint(): # allows us to reuse code in multiple spots
     else:
         print("You are horrible at guessing, no more hints, go till you get it right")
 
+def selectWord(choice):
+    global theword
+    if choice == 1:
+        theword = random.choice(list1)
+    if choice == 2:
+        theword = random.choice(list2)
+    if choice == 3:
+        theword = random.choice(list3)
+    return theword
+
 while Game:
+    os.system('cls')
     print("|***************************************|")
     print("|         Guess The Animal!!!           |")
     print("|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|")
     print("| 1. Animals                            |")
     print("| 2. Fruits                             |")
-    print("| 3. Computer Parts                     |")
+    print("| 3. colors                             |")
     print("|First we will provide you with one hint|")
     print("|           !Your Hint Is!              |")
     print("|  These animals are big fans of water  |")
     print("|***************************************|")
 
-    theword=random.choice(list)
-    name = input("What is your name? ")
+    
     print(name, end = ", ")
     answer = input("would you like to play the game? ")
     answer = answer.lower()
@@ -67,6 +77,9 @@ while Game:
             print("Plese enter a number")
 
     os.system('cls')
+
+    theWord = selectWord(choice)
+
     check = True
     while check and count <5:
         guess=input("plese put your guess here: ")
@@ -76,9 +89,19 @@ while Game:
         else:
             hint()
         count += 1
+        if count == 5:
+            print("sorry you did not gess the word correctly")
+    score = 200-40*(count-1)
+    if score > high:
+        high = score
+    print(name + ", your score is " + str(score))
+    input("Plese press enter ")
 
     os.system('cls')
     answer = input("Do you want to play again? ")
     if ('n' or 'N') in answer:
         Game = False
         print("Thank you for playing")
+
+print("Your highest score is " + str(high))
+#update file below
