@@ -11,7 +11,6 @@
 #picture = pygame. transform. scale(picture, (1280, 720))
 #bg=pygame.image.load('ClassStuff\CircleEatsSquare\Images\\bgSmaller.jpg')
 
-from email import message
 import pygame, time,os,random, math
 pygame.init()#initialize the pygame package
 

@@ -11,9 +11,6 @@
 # K_s                   s key
 # K_d                   d key
 
-from cgitb import text
-from locale import CHAR_MAX
-from re import T
 import pygame, os, time, random, math
 pygame.init()
 
@@ -24,8 +21,11 @@ MENU_FONT = pygame.font.SysFont('comicsans', 20)
 
 os.system('cls')
 
-WIDTH = 700#amount of pixels
+#screen dimentions
+WIDTH = 700
 HEIGHT = 700
+
+#colors
 colors = {"white":(255,255,255), "grey":(96,96,96), "black":(0,0,0), "red":(255,0,0), "green":(0,255,0), "blue":(0,0,255), "pink":(204,0,204), "orange":(255,128,0), "yellow":(255,255,0), "purple":(127,0,255)}
 clr = colors.get("white")
 
@@ -72,7 +72,7 @@ run = True
 background = colors.get("grey")
 
 def menu():
-    Title = ""
+    Title = TITLE_FONT.render("Title", 1, colors.get("black"))
 
 def instruction():
     #title font
