@@ -11,6 +11,7 @@
 #picture = pygame. transform. scale(picture, (1280, 720))
 #bg=pygame.image.load('ClassStuff\CircleEatsSquare\Images\\bgSmaller.jpg')
 
+from email import message
 import pygame, time,os,random, math
 pygame.init()#initialize the pygame package
 
@@ -36,20 +37,22 @@ char = pygame.transform.scale(char, (50, 50))
 # pygame.display.update()
 # pygame.time.delay(5000)
 
-
 #square Var
 hb=50
 wb=50
 xb=100
 yb=300
 
+#character vars
 charx = xb
 chary = yb
 
+#circle
 cx=350
 cy=350
 rad=25
-speed=2
+
+#inscribed box
 ibox = rad*math.sqrt(2)
 xig = cx-(ibox/2)
 yig = cy-(ibox/2)
@@ -58,17 +61,37 @@ yig = cy-(ibox/2)
 mx = 0
 my = 0
 
-square=pygame.Rect(xb,yb,wb,hb)# create the object to draw
+#objects to draw
+square=pygame.Rect(xb,yb,wb,hb)
 insSquare=pygame.Rect(xig,yig,ibox,ibox)
+
+#collors
 squareClr=colors.get("pink")
-#keep running create a lp
 circleClr=colors.get("blue")
 backgrnd=colors.get("limeGreen")
+
+#Game control
 run = True
 Game = False
+speed=2
+
+#Menu items
+message = ["Instructions", "Setting", "Game 1", "Game 2", "Scoreboard", "Exit"]
 
 def menu():
-    Title = TITLE_FONT.render("Circle eats Square", 1, colors.gte("blue"))
+    screen.fill(colors.get("white"))
+    ymenu = 155
+    Title = TITLE_FONT.render("Circle eats Square", 1, colors.get("blue"))
+    xd = WIDTH//2 - (Title.get_width()//2)
+    screen.blit(Title, (xd, 100))
+
+    for item in message:
+        text = MENU_FONT.render(item, 1, colors.get('blue'))
+        screen.blit(text, (40, ymenu))
+        pygame.display.update()
+        pygame.time.delay(50)
+        ymenu += 50
+    pygame.time.delay(50000)
 
 def Instructions():
     #rendering text objects
@@ -121,6 +144,7 @@ def Instructions():
                 if Button_2.collidepoint((mx, my)):
                     return False
 
+menu()
 run = Instructions()
 
 while run:
