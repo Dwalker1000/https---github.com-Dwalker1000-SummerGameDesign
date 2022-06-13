@@ -85,13 +85,47 @@ def menu():
     xd = WIDTH//2 - (Title.get_width()//2)
     screen.blit(Title, (xd, 100))
 
+    Button_1 = pygame.Rect(160, 400, 100, 50)
+    Button_2 = pygame.Rect(400, 400, 100, 50)
+    Button_3 = pygame.Rect(400, 400, 100, 50)
+    Button_4 = pygame.Rect(400, 400, 100, 50)
+    Button_5 = pygame.Rect(400, 400, 100, 50)
+    Button_6 = pygame.Rect(400, 400, 100, 50)
+    pygame.draw.rect(screen, colors.get("limeGreen"), Button_1)
+    pygame.draw.rect(screen, colors.get("limeGreen"), Button_2)
+    pygame.draw.rect(screen, colors.get("limeGreen"), Button_3)
+    pygame.draw.rect(screen, colors.get("limeGreen"), Button_4)
+    pygame.draw.rect(screen, colors.get("limeGreen"), Button_5)
+    pygame.draw.rect(screen, colors.get("limeGreen"), Button_6)
+
     for item in message:
         text = MENU_FONT.render(item, 1, colors.get('blue'))
         screen.blit(text, (40, ymenu))
         pygame.display.update()
         pygame.time.delay(50)
         ymenu += 50
-    pygame.time.delay(5000)
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                run=False
+                print("Y quit")
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mousePos = pygame.mouse.get_pos()
+                mx = mousePos[0]
+                my = mousePos[1]
+                if Button_1.collidepoint((mx, my)):
+                    Instructions()
+                if Button_2.collidepoint((mx, my)):
+                    return False
+                if Button_3.collidepoint((mx, my)):
+                    return True
+                if Button_4.collidepoint((mx, my)):
+                    return True
+                if Button_5.collidepoint((mx, my)):
+                    return False
+                if Button_6.collidepoint((mx, my)):
+                    return False
 
 def Instructions():
     #rendering text objects
@@ -144,8 +178,7 @@ def Instructions():
                 if Button_2.collidepoint((mx, my)):
                     return False
 
-menu()
-run = Instructions()
+run = menu()
 
 while run:
     # screen.fill(backgrnd)
