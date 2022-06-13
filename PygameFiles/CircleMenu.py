@@ -64,6 +64,7 @@ my = 0
 #objects to draw
 square=pygame.Rect(xb,yb,wb,hb)
 insSquare=pygame.Rect(xig,yig,ibox,ibox)
+mountainSqaure = pygame.Rect(250, 320, 180, 250)
 
 #collors
 squareClr=colors.get("pink")
@@ -144,8 +145,8 @@ def Instructions():
                 if Button_2.collidepoint((mx, my)):
                     return False
 
-menu()
-run = Instructions()
+# menu()
+# run = Instructions()
 
 while run:
     # screen.fill(backgrnd)
@@ -157,6 +158,9 @@ while run:
             mousePos = pygame.mouse.get_pos()
             mx = mousePos[0]
             my = mousePos[1]
+            # print(mousePos)
+    
+    pygame.draw.rect(screen, colors.get("white"), mountainSqaure)
     screen.blit(bg, (0,0))
     keys= pygame.key.get_pressed() #this is a list
     #mve square
@@ -195,11 +199,21 @@ while run:
         xig = cx-(ibox/2)
         yig = cy-(ibox/2)
         insSquare=pygame.Rect(xig,yig,ibox,ibox)
+    
+    if square.colliderect(mountainSqaure):
+        square.x = 10
+        square.y = 10
+        charx = 10
+        chary = 10
+
     #rect(surface, color, rect) -> Rect
     pygame.draw.rect(screen, squareClr,square)
     screen.blit(char, (charx, chary))
+
     #circle(surface, color, center, radius)
-    pygame.draw.circle(screen, circleClr, (cx,cy), rad)
     pygame.draw.rect(screen, squareClr, insSquare)
+    pygame.draw.circle(screen, circleClr, (cx,cy), rad)
+
     pygame.display.update()
+    pygame.time.delay(5)
 
