@@ -92,7 +92,7 @@ def menu():
         pygame.display.update()
         pygame.time.delay(50)
         ymenu += 50
-    pygame.time.delay(50000)
+    pygame.time.delay(5000)
 
 def Instructions():
     #rendering text objects
@@ -145,8 +145,8 @@ def Instructions():
                 if Button_2.collidepoint((mx, my)):
                     return False
 
-# menu()
-# run = Instructions()
+menu()
+run = Instructions()
 
 while run:
     # screen.fill(backgrnd)
