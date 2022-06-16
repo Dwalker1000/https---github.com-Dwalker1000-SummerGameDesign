@@ -1,33 +1,21 @@
-#Maria Suarez
-#6/13/2022
-#We are learning pygame basic functins, 
-# creating screens, clrs, shape ,move 
-# move  the square
-# K_UP                  up arrow
-# K_DOWN                down arrow
-# K_RIGHT               right arrow
-# K_LEFT                left arrow
-#picture = pygame. image. load(filename)
-#picture = pygame. transform. scale(picture, (1280, 720))
-#bg=pygame.image.load('ClassStuff\CircleEatsSquare\Images\\bgSmaller.jpg')
+#MAria   
+# TICTACTOE  
+# zero_Array() 
+# draw_grid() 
+# draw_markers() 
+# checkWinner() 
+# Game_end()
 
-#CREATING A MENU
-
-import pygame, time,os,random, math, sys,datetime
-pygame.init()#initialize the pygame package
-
-# print(pygame.font.get_fonts())
-# pygame.time.delay(10000)
-# TITLE_FONT = pygame.font.SysFont('comicsans', 40)
-# MENU_FONT = pygame.font.SysFont('comicsans', 22)
-
+import os, random, time, pygame, math, datetime,sys
 os.system('cls')
-WIDTH = 600 #like constant
-HEIGHT = 600
-TITLE_FONT = pygame.font.SysFont('comicsans', WIDTH//20)
-MENU_FONT = pygame.font.SysFont('comicsans', WIDTH//25)
 
+pygame.init()
 
+TITLE_FONT = pygame.font.SysFont('comicsans', 40)
+MENU_FONT = pygame.font.SysFont('comicsans', 20)
+
+WIDTH=700 #like constant
+HEIGHT=700
 colors={"white":(255,255,255),"pink":(255,0,255),"blue":(0,0,255),"limeGreen":(153,255,51),
 "RED" : (255, 0, 0),
 "GREEN" : (0, 255, 0),
@@ -613,266 +601,125 @@ colors={"white":(255,255,255),"pink":(255,0,255),"blue":(0,0,255),"limeGreen":(1
 "QUARTZ" : (217, 217, 243),
 }
 clr=colors.get("limeGreen")
-#Message Lists
 messageMenu=['Instructions', 'Settings', 'Game 1', 'Game 2', 'Scoreboard', 'Exit']
 messageSettings=["Background Colors", "Screen Size", "Sound On/Off"]
-titleMain="Circle eats Square Menu"
+mainTitle="Circle eats Square Menu"
 #create dispay wind with any name y like
 screen=pygame.display.set_mode((WIDTH,HEIGHT)) 
-pygame.display.set_caption("My First Game")  #change the title of my window
+pygame.display.set_caption("Tic Tac Te")  #change the title of my window
+backgrnd=colors.get("pink")
 
-#boxes for menu
-Bx=WIDTH//3
-By = HEIGHT//20
-Button_menu=pygame.Rect(Bx, 150, WIDTH//4, 40)
-Button_instruct=pygame.Rect(Bx, 150, WIDTH//4, 40)
-Button_settings=pygame.Rect(Bx, 200, WIDTH//4, 40)
-Button_Game1=pygame.Rect(Bx, 250, WIDTH//4, 40)
-Button_Game2=pygame.Rect(Bx, 300, WIDTH//4, 40)
-Button_score=pygame.Rect(Bx, 350, WIDTH//4, 40)
-Button_exit=pygame.Rect(Bx, 400, WIDTH//4, 40)
-Button_colors=pygame.Rect(Bx, 150, WIDTH//3, 40)
-Button_size=pygame.Rect(Bx, 200, WIDTH//3, 40)
-Button_sound=pygame.Rect(Bx, 250, WIDTH//3, 40)
+#game Variable
+player=1        #Change players 1 and -1
+gameOver=False  #check is game is Over
+winner=0        #save winner either 1 OR -1 ZERO means tie
+markers=[]      #CONTROL cells
+lineWidth=10    #thickness  drawing
+Game=True       #CONTROL game
+MxMy=(0,0)      #Clicks
+print(markers)  
+cirClr=colors.get("blue")     #circle COLOR
+xClr=colors.get("BLACK")      #X COLOR
 
-#images
-bg=pygame.image.load('PygameFiles\images\\bgSmaller.jpg')
-bg = pygame.transform.scale(bg, (WIDTH, HEIGHT))
-char = pygame.image.load('PygameFiles\images\PixelArtTutorial.png')
-char = pygame.transform.scale(char, (50, 50))
-# screen.blit(bg, (0,0))
-# pygame.display.update()
-# pygame.time.delay(5000)
+#FunctiOn TO ZERO OUR ARRAY
+def zero_Array(): 
+    for x in range(3):
+        row= [0] *3
+        markers.append(row)
 
 
-#square Var
-hb=50
-wb=50
-xb=100
-yb=300
+def draw_grid():
+    lineClr=colors.get("white")
+    for x in range(1,3):
+        pygame.draw.line(screen,lineClr,(0,HEIGHT//3*x),(WIDTH,HEIGHT//3*x),lineWidth)  #Hztal line
+        pygame.draw.line(screen,lineClr,(WIDTH//3*x, 0),(WIDTH//3*x,HEIGHT),lineWidth)  #Vert line
+    pygame.time.delay(100)
 
-charx = xb
-chary = yb
-
-cx=350
-cy=350
-rad=25
-speed=2
-ibox = rad*math.sqrt(2)
-xig = cx-(ibox/2)
-yig = cy-(ibox/2)
-
-#mouse variables
-mx = 0
-my = 0
-
-square=pygame.Rect(xb,yb,wb,hb)# create the object to draw
-insSquare=pygame.Rect(xig,yig,ibox,ibox)
-squareClr=colors.get("pink")
-#keep running create a lp
-mountainSquare=pygame.Rect(250,320,180,250)
-circleClr=colors.get("blue")
-backgrnd=colors.get("limeGreen")
-run = True
-Game = False
-BackgroundColor = colors.get("white")
-
-def Menu(Title, message,MENU):
-    
-    textTitle = TITLE_FONT.render(Title, 1, colors.get("blue"))
-    screen.fill(colors.get('white'))
-    xd = WIDTH//2 - (textTitle.get_width()//2)
-    screen.blit(textTitle, (xd, 50))
-    yMenu=150
-    clslist=list(colors.keys())
-    for item in message:
-        colorRand=random.choice(clslist)
-        if colorRand == "blue":
-            colorRand=random.choice(clslist)
-
-        Button_menu=pygame.Rect(Bx, yMenu, WIDTH//3, 40)
-        text=MENU_FONT.render(item, 1, colors.get("blue"))
-        pygame.draw.rect(screen, colors.get(colorRand), Button_menu)
-        screen.blit(text, (Bx, yMenu))
-        pygame.display.update()
-        pygame.time.delay(50)
-        yMenu += 50
-    
-    while MENU:
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                textTitle = TITLE_FONT.render("Bye-Bye", 1, colors.get("blue"))
-                screen.fill(colors.get('white'))
-                xd = WIDTH//2 - (textTitle.get_width()//2)
-                yd = HEIGHT//2- 40
-                screen.blit(textTitle, (xd, yd))
-                pygame.display.update()
-                pygame.time.delay(500)
-                pygame.quit()
-                sys.exit()
-
+def draw_Markers():
+    xValue=0
+    for x in markers:   # getting a rw
+        yValue=0
+        for y in x:  #each elem fthe rw
+            if y ==1:
                 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mousePos = pygame.mouse.get_pos()
-                mx = mousePos[0]
-                my = mousePos[1]
-                print(mx,my)
-                if Button_instruct.collidepoint((mx, my)):
-                    readFile("Instructions","pygameFiles\inst.txt")
-                if Button_settings.collidepoint((mx, my)):
-                    settings()
-                if Button_Game1.collidepoint((mx,my)):
-                    Game_1()
-                if Button_Game2.collidepoint((mx,my)):
-                    Game_1()
-                if Button_score.collidepoint((mx,my)):
-                    readFile("ScoreBoard", "PythonFiles\scre.txt")
-                if Button_exit.collidepoint((mx,my)):
-                    textTitle = TITLE_FONT.render("Bye-Bye", 1, colors.get("blue"))
-                    name="Maria"
-                    sce=374
-                    date=datetime.datetime.now()
-                    scrLine=str(sce)+"      "+name + "      "+date.strftime("%m-%d-%Y")+ "\n"
-                    myFile = open("scre.txt", 'a')
-                    myFile.write(scrLine)
-                    myFile.close()
-                    screen.fill(colors.get('white'))
-                    xd = WIDTH//2 - (textTitle.get_width()//2)
-                    yd = HEIGHT//2- 40
-                    screen.blit(textTitle, (xd, yd))
-                    pygame.display.update()
-                    pygame.time.delay(500)
-                    pygame.quit()
-                    sys.exit()
-                    
-def readFile(titleF,fileN):
+                pygame.draw.line(screen,xClr,(xValue * WIDTH//3 + 15, yValue * HEIGHT//3 + 15), (xValue * WIDTH//3 + WIDTH//3-15, yValue * WIDTH//3 + WIDTH//3-15),lineWidth)
+                pygame.draw.line(screen, xClr,(xValue*WIDTH//3 +WIDTH//3-15, yValue*HEIGHT//3+15),(xValue *WIDTH//3+15,yValue*HEIGHT//3+HEIGHT//3-15),lineWidth)
+            if y==-1:
+                
+                pygame.draw.circle(screen,cirClr,(xValue*WIDTH//3+WIDTH//6,yValue*HEIGHT//3 +HEIGHT//6),WIDTH//6-15, lineWidth)
+            yValue +=1
+        xValue +=1
+    pygame.display.update() 
+def checkWinner():
+    global gameOver,winner
+    x_pOs=0
+    for x in markers:
+        #check COL
+        if sum(x) ==3:
+            print("sum")
+            winner = 1
+            gameOver=True
+        if sum(x) ==-3:
+            winner = -1
+            gameOver=True
+        #Check ROWS
+        if markers[0][x_pOs] +markers[1][x_pOs]+markers[2][x_pOs] == 3:
+            winner = 1
+            gameOver=True
+
+        if markers[0][x_pOs] +markers[1][x_pOs]+markers[2][x_pOs] == -3:
+            winner = -1
+            gameOver=True
+        x_pOs +=1
+    # #Check DiagOnals 
+    if markers[0][0]+markers[1][1]+markers[2][2] == 3 or markers[2][0]+markers[1][1]+markers[0][2] == 3:
+        winner = 1
+        gameOver=True
+    if markers[0][0]+markers[1][1]+markers[2][2] == -3 or markers[2][0]+markers[1][1]+markers[0][2] == -3:
+        winner = -1
+        gameOver=True
+    #Check FOR a tie
+    if gameOver ==False:
+        tie=True
+        for ROW in markers:
+            for COL in ROW:
+                if COL ==0:
+                    tie=False
+        #LEts make winner =0 if it is tie
+        if tie:   #in a bOOlean variable dOnt need ==  if tie == True
+            gameOver=True
+            winner=0
+
+def gameEnd():
+    global Game
+    print("Dy play again and keep sce")
+    zero_Array()
     
-    #fills screen with white
-    screen.fill(BackgroundColor)
-    #rendering text objects
-    Title = TITLE_FONT.render(titleF, 1, colors.get("blue"))
-    xd = WIDTH//2 - (Title.get_width()//2)
-    screen.blit(Title, (xd, 50))
-    text1 = MENU_FONT.render("Yes", 1, colors.get("blue"))
-    text2 = MENU_FONT.render("No", 1, colors.get("blue"))
-
-    #creating button options
-    Button_1 = pygame.Rect(200, 400, 100, 50)
-    Button_2 = pygame.Rect(400, 400, 100, 50)
-    # pygame.draw.rect(screen, colors.get("limeGreen"), Button_1)
-    # pygame.draw.rect(screen, colors.get("limeGreen"), Button_2)
-
-    #ReAd files Instructions and scre
-    myFile = open(fileN, "r")
-    content = myFile.readlines()
-    myFile.close()
-
-    #var to controll change of line
-    yi = 150
-    for line in content:
-        Item = MENU_FONT.render(line[0:-1], 1, colors.get("blue"))
-        screen.blit(Item, (40, yi))
-        pygame.display.update()
-        pygame.time.delay(50)
-        yi+= 40
-
-    #renderig fonts to the screen
-
-    # screen.blit(text1, (225, 410))
-    # screen.blit(text2, (425, 410))
-
-    pygame.display.update()
-    while True:
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                Menu(titleMain,messageMenu, True) # call menu function
-                print("You quit")
-
-def settings():
-    Menu("Settings",messageSettings, False)
-    while True:
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                Menu(titleMain,messageMenu,True)
-                print("You quit")
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mousePos = pygame.mouse.get_pos()
-                mx = mousePos[0]
-                my = mousePos[1]
-                if Button_colors.collidepoint((mx, my)):
-                    print("Change colors")
-                    # BackgroundColor = color user choses
-                if Button_size.collidepoint((mx, my)):
-                    print("Change size")
-                    # need to update WIDTH and HEIGHT and recreate the screen
-                if Button_sound.collidepoint((mx, my)):
-                    print("Change sounds")
-                # if Button_2.collidepoint((mx, my)):
-                #     return False
-    
-def Game_1():
-    global mx,my, insSquare, charx,chary, cx,cy, rad
-    while run:
-        # screen.fill(backgrnd)
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                Menu(titleMain,messageMenu,True)
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mousePos = pygame.mouse.get_pos()
-                mx = mousePos[0]
-                my = mousePos[1]
-        screen.blit(bg, (0,0))
-        keys= pygame.key.get_pressed() #this is a list
-        #mve square
-        if keys[pygame.K_RIGHT] and square.x < WIDTH -(wb):
-            square.x += speed
-            charx += speed
-        if keys[pygame.K_LEFT] and  square.x > speed:
-            square.x -= speed
-            charx -= speed
-        if keys[pygame.K_UP] and square.y >speed:   #means clser t 0
-            square.y -= speed
-            chary -= speed
-        if keys[pygame.K_DOWN] and square.y <HEIGHT -hb:  #means clser t max value HEIGHT
-            square.y += speed
-            chary += speed
-            #mve Circle
-        if keys[pygame.K_d] and cx < WIDTH -(rad):
-            cx += speed
-            insSquare.x += speed
-        if keys[pygame.K_a] and  cx > (speed+rad):
-            cx -= speed
-            insSquare.x -= speed
-        if keys[pygame.K_w] and cy >(speed+rad):   #means clser t 0
-            cy -= speed
-            insSquare.y -= speed
-        if keys[pygame.K_s] and cy <HEIGHT -(rad):  #means clser t max value HEIGHT
-            cy += speed
-            insSquare.y += speed
-
-        if square.colliderect(insSquare):
-            print("BOOM")
-            rad+=1
-            cx=random.randint(rad, WIDTH-rad)
-            cy=random.randint(rad, HEIGHT-rad)
-            ibox = rad*math.sqrt(2)
-            xig = cx-(ibox/2)
-            yig = cy-(ibox/2)
-            insSquare=pygame.Rect(xig,yig,ibox,ibox)
-        
-        if square.colliderect(mountainSquare):
-            square.x=10
-            square.y=10
-            charx=10
-            chary=10
-        #rect(surface, color, rect) -> Rect
-        pygame.draw.rect(screen, squareClr,square)
-        screen.blit(char, (charx, chary))
-        #circle(surface, color, center, radius)
-        pygame.draw.circle(screen, circleClr, (cx,cy), rad)
-        pygame.draw.rect(screen, squareClr, insSquare)
-
-        #pygame.draw.rect(screen, colors.get('white'), mountainSquare,)
-        pygame.display.update()
-
-Menu(titleMain,messageMenu, True)
+zero_Array()
+while Game:
+    screen.fill(backgrnd)
+    draw_grid()
+    draw_Markers()
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            #Menu(mainTitle,messageMenu)
+            pygame.quit()
+            sys.exit()
+            
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            MxMy = pygame.mouse.get_pos()
+            cellx=MxMy[0]//(WIDTH//3)
+            celly=MxMy[1]//(HEIGHT//3)
+            # print(cellx, celly)
+            if markers[cellx][celly]==0:
+                markers[cellx][celly]=player
+                player *=-1
+                checkWinner()
+                print(winner)
+                if gameOver:
+                    gameEnd()
+            
+            
+            
+    pygame.display.update() 
+    pygame.time.delay(100)
