@@ -650,6 +650,7 @@ def draw_Markers():
             yValue +=1
         xValue +=1
     pygame.display.update() 
+
 def checkWinner():
     global gameOver,winner
     x_pOs=0
@@ -718,8 +719,6 @@ while Game:
                 print(winner)
                 if gameOver:
                     gameEnd()
-            
-            
             
     pygame.display.update() 
     pygame.time.delay(100)
