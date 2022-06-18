@@ -621,6 +621,9 @@ print(markers)
 cirClr=colors.get("blue")     #circle COLOR
 xClr=colors.get("BLACK")      #X COLOR
 
+Xpoints = 0
+Opoints = 0
+
 #FunctiOn TO ZERO OUR ARRAY
 def zero_Array(): 
     for x in range(3):
@@ -692,9 +695,55 @@ def checkWinner():
             winner=0
 
 def gameEnd():
-    global Game
-    print("Dy play again and keep sce")
-    zero_Array()
+    global Game, Xpoints, Opoints
+    screen.fill(backgrnd)
+    dis = ""
+    if winner == 1:
+        dis = "X is the winner"
+        Xpoints += 1
+    if winner == -1:
+        dis = "O is the winner"
+        Opoints += 1
+    if winner == 0:
+        dis = "the game ended in a tie"
+    
+    Item = MENU_FONT.render(dis, 1, colors.get("BLACK"))
+    screen.blit(Item, (WIDTH//2 - (Item.get_width()//2), 200))
+
+    text2= MENU_FONT.render("The game is over. Do you want to play again?", 1, colors.get("blue"))
+    screen.blit(text2,(WIDTH//2 - (text2.get_width()//2),50))
+
+    Button_Yes= pygame.Rect((WIDTH//4, HEIGHT//2), (100, 40))
+    Button_No= pygame.Rect((3*WIDTH//4, HEIGHT//2), (100, 40))
+    pygame.draw.rect(screen, colors.get("limeGreen"), Button_Yes)
+    pygame.draw.rect(screen, colors.get("limeGreen"), Button_No)
+
+    textYes= TITLE_FONT.render("YES", 1, colors.get("blue"))
+    textNo= TITLE_FONT.render("NO", 1, colors.get("blue"))
+    screen.blit(textYes,(WIDTH//4,HEIGHT//2))
+    screen.blit(textNo,(3*WIDTH//4,HEIGHT//2))
+
+    scoreText = MENU_FONT.render("X has: " + str(Xpoints) + " points    O has: " + str(Opoints) + " points", 1, colors.get("blue"))
+    screen.blit(scoreText,(WIDTH//2 - (scoreText.get_width()//2),100))
+    pygame.display.update()
+    
+    loop = True
+    while loop:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mousePos = pygame.mouse.get_pos()
+                mx = mousePos[0]
+                my = mousePos[1]
+                if Button_Yes.collidepoint((mx, my)):
+                    zero_Array()
+                    loop = False
+                if Button_No.collidepoint((mx, my)):
+                    pygame.quit()
+                    sys.exit()
+                    #go to menu
     
 zero_Array()
 while Game:
@@ -718,7 +767,8 @@ while Game:
                 checkWinner()
                 print(winner)
                 if gameOver:
+                    gameOver = False
                     gameEnd()
             
     pygame.display.update() 
-    pygame.time.delay(100)
+    # pygame.time.delay(100)
