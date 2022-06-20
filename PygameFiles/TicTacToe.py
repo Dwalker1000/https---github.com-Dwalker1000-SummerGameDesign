@@ -750,6 +750,7 @@ while Game:
     screen.fill(backgrnd)
     draw_grid()
     draw_Markers()
+    gameOver = False
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             #Menu(mainTitle,messageMenu)
@@ -767,7 +768,6 @@ while Game:
                 checkWinner()
                 print(winner)
                 if gameOver:
-                    gameOver = False
                     gameEnd()
             
     pygame.display.update() 
