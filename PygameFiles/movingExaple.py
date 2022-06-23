@@ -18,18 +18,18 @@ while True:
             sys.exit()
 
     pygame.draw.rect(screen, (255,255,255), box)
-    if box.y >= HEIGHT-50:
-        up = True
+    if box.y >= HEIGHT-50: # condition for the bottom of the screen
+        up = True          # Height-50 is the hight of teh screen minus the height of the box to get the lowest position of the box
         down = False
 
-    if box.y <= 0:
+    if box.y <= 0: # condition for the top of the screen
         up = False
         down = True
     
-    if up:
+    if up: # moves up by 5 pixels every time the code runs and up = True
         box.y -= 5
     
-    if down:
+    if down: # moves down by 5 pixels every time the code runs and down = True
         box.y += 5
     
     pygame.time.delay(50)

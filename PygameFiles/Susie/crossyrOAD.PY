@@ -1,5 +1,5 @@
 import pygame as p
-import time
+import time, sys
 
 class Cat(p.sprite.Sprite):
     def __init__(self):
@@ -243,12 +243,56 @@ def EndScreen(n):
     global gameOn
 
     gameOn = False
+    lose = p.image.load('PygameFiles\Susie\You lose.png')
+    lose = p.transform.scale(lose, (WIDTH,HEIGHT))
+
+    win2 = p.image.load('PygameFiles\Susie\You Win.png')
+    win2 = p.transform.scale(win2, (WIDTH,HEIGHT))
 
     if n == 0:
-        bg.image = bg.img3
+        win.blit(lose, (0,0))
+        
 
     elif n == 1:
-        bg.image = bg.img2
+        win.blit(win2, (0,0))
+    p.display.update()
+    p.time.delay(3000)
+    GameOver(n)
+
+def GameOver(num):
+    win.fill((255,255,255))
+    if num == 0:
+        text = "you lost the Game do you want to play again"
+    if num == 1:
+        text = "you won the Game do you want to play again"
+    
+    text = MENU_FONT.render(text, 1, (0,0,0))
+    xd = WIDTH//2 - (text.get_width()//2)
+    win.blit(text, (xd, 50))
+
+    Button_1 = p.Rect(200, 400, 100, 50)
+    Button_2 = p.Rect(400, 400, 100, 50)
+    p.draw.rect(win, (255,180,0), Button_1)
+    p.draw.rect(win, (255,180,0), Button_2)
+
+    text1 = MENU_FONT.render("Yes", 1, (0,0,0))
+    text2 = MENU_FONT.render("No", 1, (0,0,0))
+    win.blit(text1, (225, 410))
+    win.blit(text2, (425, 410))
+    p.display.update() 
+    while True:
+        for event in p.event.get():
+            if event.type == p.QUIT:
+                p.quit()
+                sys.exit()
+            if event.type == p.MOUSEBUTTONDOWN:
+                mousePos = p.mouse.get_pos()
+                mx = mousePos[0]
+                my = mousePos[1]
+                if Button_1.collidepoint(mx, my):
+                    return True
+                if Button_2.collidepoint(mx, my):
+                    return False
 
 WIDTH = 640
 HEIGHT = 480
@@ -261,6 +305,7 @@ clock = p.time.Clock()
 
 SCORE = 0
 score_font = p.font.SysFont('comicsans', 80, True)
+MENU_FONT = p.font.SysFont('comicsans', 20)
 
 bg = Screen()
 screen_group = p.sprite.Group()
