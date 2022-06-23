@@ -138,8 +138,6 @@ while run:
             # print(mousePos)
     keys = pygame.key.get_pressed() #allow us to see what key was pressed
 
-    
-
     #square movement
     if keys[pygame.K_d] and square.x < WIDTH-wb:
         square.x += speed
@@ -185,6 +183,7 @@ while run:
         square.y = 10
         charx = 10
         chary = 10
+
     
     #mountain collide circle
     if insSquare.colliderect(mountainSquare):
