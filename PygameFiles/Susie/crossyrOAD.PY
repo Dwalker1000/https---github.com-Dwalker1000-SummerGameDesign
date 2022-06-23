@@ -252,9 +252,9 @@ def EndScreen(n):
     if n == 0:
         win.blit(lose, (0,0))
         
-
     elif n == 1:
         win.blit(win2, (0,0))
+        
     p.display.update()
     p.time.delay(3000)
     GameOver(n)
